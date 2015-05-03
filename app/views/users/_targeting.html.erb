@@ -1,0 +1,87 @@
+<table id="home-table" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th><p style="font-size:14px;margin-bottom:0px" class="lead">Campaigns&nbsp;&nbsp;</p></th>
+        <!--<th>
+          <p style="font-size:14px;margin-bottom:0px" class="lead">
+            <i style="opacity:0.8" class="icon-star"></i><strong>%</strong> &nbsp;Volume
+            <span style="cursor:pointer;font-size:14px;opacity:0.6" rel="tooltip" title="<b>Volume</b><br>What % of attempted impressions are we able to make? If this is low, you need to change the term.">
+            ?
+            </span>
+          </p>
+        </th>-->
+        <th>
+          <p style="font-size:14px;margin-bottom:0px" class="lead">
+            <i style="opacity:0.8" class="icon-star"></i>&nbsp;Impressions
+            <span style="cursor:pointer;font-size:14px;opacity:0.6" rel="tooltip" title="<b>Impressions</b><br>How many times have we favorited tweets about this target?">
+            ?
+            </span>
+          </p>
+        </th>
+        <th>
+          <p style="font-size:14px;margin-bottom:0px" class="lead">
+            <i style="opacity:0.8" class="icon-refresh"></i> &nbsp;Conversion
+            <span style="cursor:pointer;font-size:14px;opacity:0.6" rel="tooltip" title="<b>Conversion (%)</b><br>What % of impressions turn into follows?">
+            ?
+            </span>
+          </p>
+        </th>
+        <th>
+          <p style="font-size:14px;margin-bottom:0px" class="lead">
+            <i style="opacity:0.8" class="icon-user"></i>&nbsp;Follows
+            <span style="cursor:pointer;font-size:14px;opacity:0.6" rel="tooltip" title="<b>Follows</b><br>How many people have followed you as a result of impressions on this target?">
+            ?
+            </span>
+          </p>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr style="color:#707070;font-weight:800">
+        <td>Total</td>
+        <%
+          i_c = 0
+          f_c = 0
+          @campaigns.map{|x| i_c+=x.impressions_count if x.impressions_count}
+          @campaigns.map{|x| f_c+=x.follows_count if x.follows_count}
+        %>
+        <td><%= i_c %></td>
+        <td><%= (f_c*100)/i_c rescue 0 %></td>
+        <td><%= f_c %></td>
+    </tr>
+  
+    <%= form_tag('/users/campaigns') %>
+        <%= hidden_field_tag :user_id, @current_user.id %>
+        <% count = 0 %>
+        <% @campaigns.each do |campaign|  %>
+          <tr rel="tooltip-sharing">
+            <td>
+              <div style="margin-bottom:0px" class="input-prepend">
+                <span class="add-on"><%= (count+1) %></span>
+                <input name="campaigns[]" id="prependedInput" type="text" placeholder="<%= campaign.campaign %>" value="<%= campaign.campaign %>"/>
+              </div><!--input-->
+            </td>
+            <td><%= (campaign.impressions_count ? campaign.impressions_count : 0) %></td>
+            <td><%= ((campaign.follows_count*100)/campaign.impressions_count) rescue 0 %></td>
+            <td><%= (campaign.follows_count ? campaign.follows_count : 0) %></td>
+          </tr>
+          <% count += 1 %>
+        <% end %>
+        <% for i in count..(@current_user.campaign_count-1) %>
+         <tr rel="tooltip-sharing">
+           <td>
+              <div style="margin-bottom:0px" class="input-prepend">
+                <span class="add-on"><%= (i+1) %></span>
+                <input name="campaigns[]" id="prependedInput" type="text" placeholder="enter your campaign here" value=""/>
+              </div><!--input-->
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% end %>
+    
+    </tbody>
+    </table>
+    <button type="submit" class="btn"><i style="opacity:0.58" class="icon-save"></i>&nbsp;Save targets</button>
+    </form>

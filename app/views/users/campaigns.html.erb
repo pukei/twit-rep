@@ -1,0 +1,142 @@
+
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        overflow-x:hidden;
+      }
+    </style>
+
+   
+  <div class="container">
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          
+          <a class="brand" href="/">
+            <i class="icon-plane"></i>&nbsp;Fan<strong>Base</strong>
+          </a>
+          <div class="nav-collapse collapse">
+            <div class="span offset8 dropdown" style="top: 5px;">
+              <a class="dropdown-toggle" id="dLabel" data-toggle="dropdown" data-target="#">
+                Welcome <img width="30px" src="<%= current_user.profile_image_url %>">&nbsp;<%= current_user.name %>!<%#= link_to "Sign Out", signout_path %>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li role="presentation"><%= link_to "My Account", account_users_path %></li>
+                <li role="presentation"><%= link_to "My Campaigns", campaigns_users_path %></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><%= link_to "Sign Out", signout_path %></li>
+              </ul>
+            </div>
+          </div><!--/.nav-collapse -->
+        </div><!--/container-->
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="row">
+      <% if params[:action] == 'campaigns' %>
+      <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#targeting">Targeting</a></li>
+        <li><a href="#analytics">Analytics</a></li>
+      </ul>
+       
+      <div class="tab-content" style="overflow:hidden">
+        <div class="tab-pane active" id="targeting">
+          <%= render :partial => "targeting" %>
+        </div>
+        <div class="tab-pane" id="analytics">
+          <%= render :partial => "analytics" %>
+        </div>
+      </div>
+      <% elsif params[:action] == "account" %>
+      <ul class="nav nav-tabs" id="myTab">
+        <li <% if params[:tab].nil? or params[:tab] == "profile" %>class="active"<% end %>><a href="#profile">My Profile</a></li>
+        <li <% if !params[:tab].nil? and params[:tab] == "plan" %>class="active"<% end %>><a href="#plan">Update Plan</a></li>
+      </ul>
+       
+      <div class="tab-content" style="overflow:hidden">
+        <div class="tab-pane <% if params[:tab].nil? or params[:tab] == "profile" %> active<% end %>" id="profile">
+          <%= render :partial => "user_account_info" %>
+        </div>
+        <div class="tab-pane <% if !params[:tab].nil? and params[:tab] == "plan" %> active<% end %>" id="plan">
+          <%= render :partial => "user_plan_update" %>
+        </div>
+      </div>
+      <% end %>
+      </div>      
+
+      <footer style=" ">
+        <hr>
+        <div class="row">
+          <!-- <div class="span">
+            <p>&copy; follow<strong>gen</strong> 2013</p>
+          </div>
+          <div class="hidden-phone span">
+            <p><a href="/users">Influencers </a></p>
+          </div>
+          <div class="hidden-phone span">
+            <p><a href="/faq">FAQ</a></p>
+          </div>
+          <div class="span">
+            <p><a href="/contact">Contact</a></p>
+          </div> -->
+          <!--<div class="span">
+            <p><a href="/vignettes">Vignettes</a></p>
+          </div>-->
+        </div>
+      </footer>
+    </div> <!-- /container -->
+
+  </div>
+
+
+  <% if params[:action] == 'campaigns' and (current_user.account.nil? or current_user.account.email.nil? or current_user.account.email.empty?) %>
+  <%= form_tag '/users/update_info', :remote => true do -%>
+  <div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h3 id="myModalLabel">Hello <%= current_user.name %></h3>
+    </div>
+    <div class="modal-body">
+        <p>Thank You for using our free trial.</p>
+        <p>You have <b><%= current_user.account ? ((current_user.account.end_date-current_user.account.start_date).to_i/1.day) : 30 %> days</b> left.</p>
+
+        <% if current_user.account and !current_user.account.email.nil? and !current_user.account.email.empty? %>
+        You can always go to <b>My account</b> page to change your plan.
+        <% else %>
+        <p>We would like to communicate with you, do provide your e-mail id:</p><br />
+        <p><input id="userEmail" required class="input-xlarge" name="account[email]" type=email placeholder="eg. somename@yourdomain.com"></p>
+        <% end %>
+    </div>
+    <div class="modal-footer">
+        <% if !current_user.account or current_user.account.email.nil? or current_user.account.email.empty? %>
+        <button class="btn btn-mini btn-primary emailSubmit">
+            Save
+        </button>
+        <% else %>
+        <button class="btn btn-mini" data-dismiss="modal" aria-hidden="true">
+            Close
+        </button>
+        <% end %>
+    </div>
+</div>
+<% end %>
+<script type="text/javascript">
+  $('.emailSubmit').on('click', function (){
+      return validateEmail()
+   });
+  function validateEmail(){
+    var x=$('#userEmail').val()
+    
+    var atpos=x.indexOf("@");
+    var dotpos=x.lastIndexOf(".");
+    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+      alert("Not a valid e-mail address");
+      return false;
+    }
+  }
+</script>
+<% end %>

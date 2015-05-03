@@ -1,0 +1,14 @@
+development: &sandbox # change to your own
+  username: paresharma-facilitator_api1.gmail.com
+  password: 1379261394
+  signature: AFcWxV21C7fd0v3bYYYRCpSSRl31APYMiqtWNNeiJDPzogjHTmdzDIGV
+  sandbox: true
+
+test:
+  <<: *sandbox
+
+production: &production
+  username: paresharma-facilitator_api1.gmail.com
+  password: 1379261394
+  signature: AFcWxV21C7fd0v3bYYYRCpSSRl31APYMiqtWNNeiJDPzogjHTmdzDIGV
+  sandbox: true

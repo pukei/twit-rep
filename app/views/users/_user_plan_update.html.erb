@@ -1,0 +1,35 @@
+<style type="text/css">
+  .paypal{
+        background: url("https://www.paypal.com/en_US/i/btn/btn_dg_pay_w_paypal.gif") repeat scroll 0 0 transparent !important;
+        border: medium none !important;
+        height: 33px !important;
+        opacity: 0.6 !important;
+        text-indent: -9999px !important;
+        width: 150px !important;
+  }
+</style>
+<div style="padding-bottom: 10px">
+  Current Plan : <span class="label label-info" title="<%=h current_user.account.plan.summary %>"><%= current_user.account.plan.title %></</span>
+</div>
+<table class="table table-bordered table-hover">
+    <thead>
+      <tr style="background-color:#FBFBFB">
+        <th>Plans/Attributes</th>
+        <th>Features</th>
+        <th>Monthly Impressions</th>
+        <th>Cost (Per Month)</th>
+        <th>Subscribe</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @plans[1..(@plans.size-1)].each_with_index do |plan, i| %>
+      <tr>
+        <th style="background-color:#FBFBFB"><%= plan.title %></th>
+        <td><%= plan.summary %></td>
+        <td><%= plan.monthly_impressions %></td>
+        <td>$<%= plan.price %><%#= PAYPAL_CONFIG %></td>
+        <td><%= render :partial => "form", :locals => {:payment => @payments[i]} %></td>
+      </tr>
+      <% end %>
+    </tbody>
+</table>

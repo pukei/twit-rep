@@ -1,0 +1,13 @@
+<% if (!current_user.account.payment or current_user.account.payment.canceled or current_user.account.payment.plan_id != payment.plan_id) %>
+	<%= form_for payment do |f| %>
+	  <%= f.hidden_field :amount %>
+	  <%= f.hidden_field :digital %>
+	  <%= f.hidden_field :account_id %>
+	  <%= f.hidden_field :recurring %>
+	  <%= f.hidden_field :plan_id %>
+	  <%= f.hidden_field :identifier %>
+	  <%= f.submit 'Pay', :class => 'paypal' %>
+	<% end %>
+<% else %>
+	<%= link_to 'Unsubscribe', current_user.account.payment, method: :delete %>
+<% end %>

@@ -1,0 +1,156 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+</script>
+
+    <div class="span10">
+      
+        <div class="span4">
+          <p style="font-size:14px" class="lead">
+            <span style="opacity:0.8" ><i class="icon-user"></i></span>
+              Follows |
+              <strong style="color:#707070"><%= @followers.size %> </strong>
+              in the past week
+          </p>
+          <div style="opacity:0.8" class="span4 hidden-phone"> <div id="chart_div_diff_followers"></div> </div>
+        </div>
+      
+        <div class="span4" style="float:right">
+          <p style="font-size:14px" class="lead">
+            <span style="opacity:0.8" ><i class="icon-star"></i></span>
+              Impressions |
+              <strong style="color:#707070"><%= @impressions.size %> </strong>
+              in the past week 
+              <!-- | <strong style="color:#707070"><%#= (@impressions.size/7).to_i %></strong> per day -->
+          </p>
+          <div style="opacity:0.8" class="span4 hidden-phone"> <div id="chart_div_diff_favorites"></div> </div>
+        </div>
+    </div>
+
+    <!-- Followers & Impressions-->
+
+
+<script type="text/javascript">
+
+  (function(){
+    function drawChart(){
+      var data = google.visualization.arrayToDataTable([
+
+      ['Day', 'Impressions'],
+
+      
+
+        ['Sun',  <%= FavCount.last_week_daywise(@impressions, 7).size %>],
+
+      
+
+        ['Mon',  <%= FavCount.last_week_daywise(@impressions, 1).size %>],
+
+      
+
+        ['Tue',  <%= FavCount.last_week_daywise(@impressions, 2).size %>],
+
+      
+
+        ['Wed',  <%= FavCount.last_week_daywise(@impressions, 3).size %>],
+
+      
+
+        ['Thu',  <%= FavCount.last_week_daywise(@impressions, 4).size %>],
+
+      
+
+        ['Fri',  <%= FavCount.last_week_daywise(@impressions, 5).size %>],
+
+      
+
+        ['Sat',  <%= FavCount.last_week_daywise(@impressions, 6).size %>]
+
+      
+
+       ]);
+
+      var options = {
+        chartArea: {width:'80%', height:'80%'},
+        height:250,
+        tooltip:{textStyle:{color:'#303030'}},
+        vAxis:{gridlines:{color:'#FAEBD7'}},
+        hAxis:{baseline:false},
+        colors:['#d9edf7'],
+        legend:{position:'none'}
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_diff_favorites'));
+
+      chart.draw(data, options);
+    }
+    
+      google.setOnLoadCallback(drawChart);
+    
+  })();
+
+</script>
+
+
+
+<script type="text/javascript">
+
+  (function(){
+    function drawChart(){
+      var data = google.visualization.arrayToDataTable([
+
+      ['Day', 'Follows'],
+
+      
+
+        ['Sun',  <%= Impression.last_week_daywise(@followers, 7).size %>],
+
+      
+
+        ['Mon',  <%= Impression.last_week_daywise(@followers, 1).size %>],
+
+      
+
+        ['Tue',  <%= Impression.last_week_daywise(@followers, 2).size %>],
+
+      
+
+        ['Wed',  <%= Impression.last_week_daywise(@followers, 3).size %>],
+
+      
+
+        ['Thu',  <%= Impression.last_week_daywise(@followers, 4).size %>],
+
+      
+
+        ['Fri',  <%= Impression.last_week_daywise(@followers, 5).size %>],
+
+      
+
+        ['Sat',  <%= Impression.last_week_daywise(@followers, 6).size %>]
+
+      
+
+       ]);
+
+      var options = {
+        chartArea: {width:'80%', height:'80%'},
+        height:250,
+        tooltip:{textStyle:{color:'#303030'}},
+        vAxis:{gridlines:{color:'#FAEBD7'}},
+        hAxis:{baseline:false},
+        colors:['#d9edf7'],
+        legend:{position:'none'}
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_diff_followers'));
+
+      chart.draw(data, options);
+    }
+    
+      google.setOnLoadCallback(drawChart);
+    
+  })();
+
+</script>

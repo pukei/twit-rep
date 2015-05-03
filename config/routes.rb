@@ -1,8 +1,30 @@
 TwitRep::Application.routes.draw do
-  match "/auth/:provider/callback" => "sessions#create"
-  match "/signout" => "sessions#destroy", :as => :signout
+  resources :plans
 
-  root to: 'welcome#index'
+
+  match "/auth/:provider/callback" => 'sessions#create'
+  match "/signout" => "sessions#destroy", :as => :signout
+  match "/auth/failure" => 'users#home'
+
+  root to: 'users#home'
+
+  resources :users do
+    collection do
+      get 'campaigns'
+      post 'campaigns'
+      get 'analytics'
+      post 'update_info'
+      get 'account'
+    end
+  end
+
+  resources :payments, only: [:show, :create, :destroy] do
+    collection do
+      get :success
+      get :cancel
+      post :notify
+    end
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

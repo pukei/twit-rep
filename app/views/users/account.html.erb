@@ -1,0 +1,66 @@
+
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        overflow-x:hidden;
+      }
+    </style>
+
+   
+  <div class="container">
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          
+          <a class="brand" href="/">
+            <i class="icon-plane"></i>&nbsp;Twit<strong>Rep</strong>
+          </a>
+          <div class="nav-collapse collapse">
+            <div class="span offset8 dropdown" style="top: 10px;">
+              <a class="dropdown-toggle" id="dLabel" data-toggle="dropdown" data-target="#">
+                Welcome <%= current_user.name %>!<%#= link_to "Sign Out", signout_path %>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">My Account</a></li>
+                <li role="presentation"><%= link_to "My Campaigns", campaigns_users_path %></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><%= link_to "Sign Out", signout_path %></li>
+              </ul>
+            </div>
+          </div><!--/.nav-collapse -->
+        </div><!--/container-->
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="row">
+          <%= render :partial => "targeting" %>
+      </div>      
+
+      <footer style=" ">
+        <hr>
+        <div class="row">
+          <!-- <div class="span">
+            <p>&copy; follow<strong>gen</strong> 2013</p>
+          </div>
+          <div class="hidden-phone span">
+            <p><a href="/users">Influencers </a></p>
+          </div>
+          <div class="hidden-phone span">
+            <p><a href="/faq">FAQ</a></p>
+          </div>
+          <div class="span">
+            <p><a href="/contact">Contact</a></p>
+          </div> -->
+          <!--<div class="span">
+            <p><a href="/vignettes">Vignettes</a></p>
+          </div>-->
+        </div>
+      </footer>
+    </div> <!-- /container -->
+
+  </div>
