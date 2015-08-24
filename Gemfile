@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby File.read('.ruby-version').rstrip
+
 gem 'rails', '3.2.10'
 
 gem 'pg'
