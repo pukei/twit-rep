@@ -7,15 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-    <div class="container">
-		<%= yield %>
-	</div>
+  <div class="container">
+    <%= yield %>
+  </div>
 </body>
 </html>
 
 <script type="text/javascript">
   $('.dropdown-toggle').dropdown();
-  
+
   $('#myTab a').click(function (e) {
     e.preventDefault();
     $(this).tab('show');

@@ -7,15 +7,15 @@
       }
     </style>
 
-   
+
   <div class="container">
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          
+
           <a class="brand" href="/">
-            <i class="icon-plane"></i>&nbsp;Fan<strong>Base</strong>
+            <i class="icon-plane"></i>&nbsp;Twit<strong>Rep</strong>
           </a>
           <div class="nav-collapse collapse">
             <div class="span offset8 dropdown" style="top: 5px;">
@@ -43,7 +43,7 @@
         <li class="active"><a href="#targeting">Targeting</a></li>
         <li><a href="#analytics">Analytics</a></li>
       </ul>
-       
+
       <div class="tab-content" style="overflow:hidden">
         <div class="tab-pane active" id="targeting">
           <%= render :partial => "targeting" %>
@@ -55,9 +55,9 @@
       <% elsif params[:action] == "account" %>
       <ul class="nav nav-tabs" id="myTab">
         <li <% if params[:tab].nil? or params[:tab] == "profile" %>class="active"<% end %>><a href="#profile">My Profile</a></li>
-        <li <% if !params[:tab].nil? and params[:tab] == "plan" %>class="active"<% end %>><a href="#plan">Update Plan</a></li>
+        <!-- <li <% if !params[:tab].nil? and params[:tab] == "plan" %>class="active"<% end %>><a href="#plan">Update Plan</a></li> -->
       </ul>
-       
+
       <div class="tab-content" style="overflow:hidden">
         <div class="tab-pane <% if params[:tab].nil? or params[:tab] == "profile" %> active<% end %>" id="profile">
           <%= render :partial => "user_account_info" %>
@@ -67,7 +67,7 @@
         </div>
       </div>
       <% end %>
-      </div>      
+      </div>
 
       <footer style=" ">
         <hr>
@@ -130,7 +130,7 @@
    });
   function validateEmail(){
     var x=$('#userEmail').val()
-    
+
     var atpos=x.indexOf("@");
     var dotpos=x.lastIndexOf(".");
     if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){

@@ -2,7 +2,7 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-APP_NAME = 'FanBase'
+APP_NAME = 'TwitRep'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
